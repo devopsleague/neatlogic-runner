@@ -1,11 +1,11 @@
 package com.neatlogic.autoexecrunner.web.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.nacos.common.utils.StringUtils;
 import com.neatlogic.autoexecrunner.common.config.Config;
 import com.neatlogic.autoexecrunner.constvalue.AuthenticateType;
 import com.neatlogic.autoexecrunner.dto.ApiVo;
 import com.neatlogic.autoexecrunner.web.core.ApiAuthBase;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.util.Base64;
 import org.springframework.stereotype.Component;
 

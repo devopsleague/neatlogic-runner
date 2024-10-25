@@ -1,9 +1,5 @@
 package com.neatlogic.autoexecrunner.common.config;
 
-import com.alibaba.nacos.api.annotation.NacosInjected;
-import com.alibaba.nacos.api.config.ConfigService;
-import com.alibaba.nacos.api.config.listener.Listener;
-import com.alibaba.nacos.api.exception.NacosException;
 import com.neatlogic.autoexecrunner.common.RootConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.FileNameMap;
@@ -20,14 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
 
 @RootConfiguration
 public class Config {
     private static final Logger logger = LoggerFactory.getLogger(Config.class);
-    @NacosInjected
-    private ConfigService configService;
     private static final String CONFIG_FILE = "application.properties";
     public static final String RESPONSE_TYPE_JSON = "application/json;charset=UTF-8";
     private static String JWT_SECRET = "neatlogic#neatlogic$secret";
@@ -108,7 +100,7 @@ public class Config {
      */
     public static Integer MERGE_CONCURRENT_SIZE = 4;
 
-    public static Boolean IS_SSL ;
+    public static Boolean IS_SSL;
 
     //启动服务需要注册runner的租户，以逗号隔开
     public static String REGISTER_TENANTS;
@@ -167,50 +159,21 @@ public class Config {
         return GITLAB_PASSWORD;
     }
 
-    public static Boolean IS_SSL(){
+    public static Boolean IS_SSL() {
         return IS_SSL;
     }
 
-    public static String REGISTER_TENANTS(){
+    public static String REGISTER_TENANTS() {
         return REGISTER_TENANTS;
-    }
-
-    public static Integer SERVER_ID(){
-        return SERVER_ID;
     }
 
 
     @PostConstruct
     public void init() {
         try {
-            String propertiesString = configService.getConfig("config", "com.neatlogic", 3000);
-            loadNacosProperties(propertiesString);
-            configService.addListener("config", "com.neatlogic", new Listener() {
-                @Override
-                public void receiveConfigInfo(String configInfo) {
-                    loadNacosProperties(configInfo);
-                }
-
-                @Override
-                public Executor getExecutor() {
-                    return null;
-                }
-            });
-        } catch (NacosException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    private static void loadNacosProperties(String configInfo) {
-        try {
             Properties prop = new Properties();
-            if (StringUtils.isNotBlank(configInfo)) {
-                prop.load(new ByteArrayInputStream(configInfo.getBytes()));
-            } else {
-                // 如果从nacos中读不出配置，则使用本地配置文件配置
-                prop.load(new InputStreamReader(Objects.requireNonNull(Config.class.getClassLoader().getResourceAsStream(CONFIG_FILE)), StandardCharsets.UTF_8));
-            }
-            SERVER_PORT = Integer.parseInt(prop.getProperty("server.port","8084"));
+            prop.load(new InputStreamReader(Objects.requireNonNull(Config.class.getClassLoader().getResourceAsStream(CONFIG_FILE)), StandardCharsets.UTF_8));
+            SERVER_PORT = Integer.parseInt(prop.getProperty("server.port", "8084"));
             AUTOEXEC_HOME = prop.getProperty("autoexec.home");
             if (StringUtils.isBlank(AUTOEXEC_HOME)) {
                 logger.error("请在配置文件中定义autoexec.home参数");
@@ -267,13 +230,13 @@ public class Config {
 
             REGISTER_TENANTS = prop.getProperty("register.tenants");
 
-            SERVER_ID = Integer.parseInt(prop.getProperty("server.id","1"));
-
-
+            SERVER_ID = Integer.parseInt(prop.getProperty("server.id", "1"));
 
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
+
     }
+
 }

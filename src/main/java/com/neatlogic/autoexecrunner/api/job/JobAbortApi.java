@@ -15,7 +15,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 package com.neatlogic.autoexecrunner.api.job;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.neatlogic.autoexecrunner.asynchronization.threadlocal.UserContext;
 import com.neatlogic.autoexecrunner.constvalue.JobAction;
 import com.neatlogic.autoexecrunner.core.ExecProcessCommand;
@@ -24,6 +23,7 @@ import com.neatlogic.autoexecrunner.restful.core.privateapi.PrivateApiComponentB
 import com.neatlogic.autoexecrunner.threadpool.CommonThreadPool;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class JobAbortApi extends PrivateApiComponentBase {
         commandVo.setAction(JobAction.ABORT.getValue());
         //set command
         List<String> commandList = Arrays.asList("autoexec", "--jobid", commandVo.getJobId(), "--execuser", UserContext.get().getUserUuid(), "--abort");
-        commandList = Lists.newArrayList(commandList);
+        commandList = new ArrayList<>(commandList);
         if(commandVo.getPassThroughEnv() != null){
             commandList.add("--passthroughenv");
             commandList.add(commandVo.getPassThroughEnv().toString());

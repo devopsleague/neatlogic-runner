@@ -15,7 +15,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 package com.neatlogic.autoexecrunner.api.job;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.neatlogic.autoexecrunner.asynchronization.threadlocal.UserContext;
 import com.neatlogic.autoexecrunner.constvalue.JobAction;
 import com.neatlogic.autoexecrunner.core.ExecProcessCommand;
@@ -26,6 +25,7 @@ import com.neatlogic.autoexecrunner.util.FileUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +52,7 @@ public class JobExecApi extends PrivateApiComponentBase {
         List<String> commandList = Arrays.asList("autoexec",
                 "--jobid", commandVo.getJobId(), "--execuser", UserContext.get().getUserUuid(), "--execid", commandVo.getExecid()
         );//--paramsfile 参数 仅用于测试
-        commandList = Lists.newArrayList(commandList);
+        commandList = new ArrayList<>(commandList);
         if (commandVo.getFirstFire() != null && commandVo.getFirstFire()) {
             commandList.add("--firstfire");
             //删除当前consoleLog
