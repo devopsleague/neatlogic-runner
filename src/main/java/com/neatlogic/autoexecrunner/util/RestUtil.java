@@ -1,6 +1,7 @@
 package com.neatlogic.autoexecrunner.util;
 
 
+import com.neatlogic.autoexecrunner.asynchronization.threadlocal.UserContext;
 import com.neatlogic.autoexecrunner.dto.RestVo;
 import com.neatlogic.autoexecrunner.util.authtication.core.AuthenticateHandlerFactory;
 import com.neatlogic.autoexecrunner.util.authtication.core.IAuthenticateHandler;
@@ -77,7 +78,7 @@ public class RestUtil {
 
             // 设置默认header
             connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-            if(StringUtils.isNotBlank(restVo.getTenant())){
+            if (StringUtils.isNotBlank(restVo.getTenant())) {
                 connection.setRequestProperty("Tenant", restVo.getTenant());
             }
 
@@ -104,12 +105,16 @@ public class RestUtil {
                 IOUtils.copy(reader, writer);
                 result = writer.toString();
                 if (100 > connection.getResponseCode() || connection.getResponseCode() > 399) {
-                    logger.error(connection.getResponseCode()+":"+result);
+                    String remoteUrl = StringUtils.EMPTY;
+                    if (UserContext.get() != null && UserContext.get().getRequest() != null && StringUtils.isNotBlank(UserContext.get().getRequest().getRemoteAddr())) {
+                        remoteUrl = "remoteUrl:" + UserContext.get().getRequest().getRemoteAddr()+",";
+                    }
+                    logger.error("response code:{}, {} result:{}", connection.getResponseCode(), remoteUrl, result);
                 }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
                 result = e.getMessage();
-            }finally {
+            } finally {
                 connection.disconnect();
             }
         }

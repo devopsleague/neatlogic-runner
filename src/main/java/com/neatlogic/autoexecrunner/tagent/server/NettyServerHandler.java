@@ -126,7 +126,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
                 result = RestUtil.sendRequest(restVo);
                 resultJson = JSON.parseObject(result);
                 if (!resultJson.containsKey("Status") || !"OK".equals(resultJson.getString("Status"))) {
-                    throw new TagentActionFailedException(url + ":" + resultJson.getString("Message"));
+                    throw new TagentActionFailedException(String.format("host:%s tagent update info failed,error details:%n%s:%s", agentIp, url, resultJson.getString("Message")));
                 }
             } catch (JSONException ex) {
                 throw new ConnectRefusedException(url + " " + result);
@@ -203,7 +203,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
                         String agentActionExecRes = RestUtil.sendRequest(restVo);
                         JSONObject resultJson = JSON.parseObject(agentActionExecRes);
                         if (!resultJson.containsKey("Status") || !"OK".equals(resultJson.getString("Status"))) {
-                            throw new TagentActionFailedException(restVo.getUrl() + ":" + resultJson.getString("Message"));
+                            throw new TagentActionFailedException(String.format("host:%s tagent update info failed,error details:%n%s:%s", agentIp, restVo.getUrl(), resultJson.getString("Message")));
                         }
                         if (agentActionExecRes != null && ("null".equals(agentActionExecRes) || agentActionExecRes.startsWith("[") && agentActionExecRes.endsWith("]") || agentActionExecRes.startsWith("{") && agentActionExecRes.endsWith("}"))) {
                             JSONObject resObj = JSON.parseObject(agentActionExecRes);
