@@ -107,9 +107,9 @@ public class RestUtil {
                 if (100 > connection.getResponseCode() || connection.getResponseCode() > 399) {
                     String remoteUrl = StringUtils.EMPTY;
                     if (UserContext.get() != null && UserContext.get().getRequest() != null && StringUtils.isNotBlank(UserContext.get().getRequest().getRemoteAddr())) {
-                        remoteUrl = "remoteUrl:" + UserContext.get().getRequest().getRemoteAddr()+",";
+                        remoteUrl = "remoteUrl:" + UserContext.get().getRequest().getRemoteAddr() + ",";
                     }
-                    logger.error("response code:{}, {} result:{}", connection.getResponseCode(), remoteUrl, result);
+                    logger.error("url:{},response code:{}, {} result:{}", restVo.getUrl(), connection.getResponseCode(), remoteUrl, result);
                 }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
