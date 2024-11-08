@@ -85,6 +85,3 @@ data.home=${runner.home}/data
 tagent.download.path=/app/autoexec/data/tagent/
 ```
 
-## 技术交流
-
-[点击交流 Neatlogic in Slack](https://join.slack.com/t/neatlogichome/shared_invite/zt-1w037axf8-r_i2y4pPQ1Z8FxOkAbb64w)
