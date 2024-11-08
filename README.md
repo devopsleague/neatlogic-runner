@@ -24,6 +24,10 @@ neatlogic-runner(执行器)+[neatlogic-autoexec-backend](../../../neatlogic-auto
 ## 安装教程
 
 需整体一键构建和部署，请参考[neatlogic-itom-all](../../../neatlogic-itom-all/blob/develop3.0.0/README.md)
+
+## 关于依赖包tagent-client.jar
+构建时可能会报com.neatlogic.tagent包不存在，此包暂不开源，请到neatlogic-itom-all/tagent目录找到对应版本下载使用。 
+
 ### ❗❗❗ 注意
 ```js
  ❗❗❗"仅支持在mac或linux下开发部署"   
