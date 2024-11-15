@@ -2,7 +2,10 @@ package com.neatlogic.autoexecrunner.constvalue;
 
 
 import com.neatlogic.autoexecrunner.asynchronization.threadlocal.TenantContext;
+import com.neatlogic.autoexecrunner.common.config.Config;
 import com.neatlogic.autoexecrunner.dto.UserVo;
+
+import java.util.Objects;
 
 /**
  * @Author:14378
@@ -12,7 +15,8 @@ import com.neatlogic.autoexecrunner.dto.UserVo;
  */
 public enum SystemUser {
     SYSTEM("system", "system", "系统"),
-    ANONYMOUS("anonymous", "anonymous", "匿名用户");
+    ANONYMOUS("anonymous", "anonymous", "匿名用户"),
+    AUTOEXEC("autoexec", "autoexec", "自动化用户");
     private String userId;
     private String userUuid;
     private String userName;
@@ -51,7 +55,12 @@ public enum SystemUser {
         return userVo;
     }
 
-    ;
+    public String getToken() {
+        if (Objects.equals(userId, AUTOEXEC.getUserId())) {
+            return Config.AUTOEXEC_TOKEN();
+        }
+        return null;
+    }
 
     public static String getUserName(String userUuid) {
         for (SystemUser user : values()) {

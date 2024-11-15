@@ -118,7 +118,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
             RestVo restVo = null;
             String url = String.format("%s/api/rest/%s", Config.NEATLOGIC_ROOT(), Constant.ACTION_UPDATE_TAGENT);
             try {
-                restVo = new RestVo(url, JSON.parseObject(JSON.toJSONString(params)), AuthenticateType.BEARER.getValue(), tenant);
+                restVo = new RestVo(url, JSON.parseObject(JSON.toJSONString(params)), AuthenticateType.HMAC.getValue(), tenant);
                 UserVo userVo = SystemUser.SYSTEM.getUserVo();
                 userVo.setTenant(tenant);
                 LoginAuthHandlerBase.buildJwt(userVo);
@@ -195,7 +195,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
 
                         String url = String.format("%s/api/rest/%s", Config.NEATLOGIC_ROOT(), Constant.ACTION_UPDATE_TAGENT_INFO);
                         String tenant = params.get("tenant");
-                        RestVo restVo = new RestVo(url, JSON.parseObject(JSON.toJSONString(params)), AuthenticateType.BEARER.getValue(), tenant);
+                        RestVo restVo = new RestVo(url, JSON.parseObject(JSON.toJSONString(params)), AuthenticateType.HMAC.getValue(), tenant);
                         UserVo userVo = SystemUser.SYSTEM.getUserVo();
                         userVo.setTenant(tenant);
                         LoginAuthHandlerBase.buildJwt(userVo);

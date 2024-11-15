@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.neatlogic.autoexecrunner.asynchronization.threadlocal.UserContext;
 import com.neatlogic.autoexecrunner.constvalue.AuthenticateType;
+import com.neatlogic.autoexecrunner.dto.RestVo;
 import com.neatlogic.autoexecrunner.exception.HttpMethodIrregularException;
 import com.neatlogic.autoexecrunner.exception.core.ApiRuntimeException;
 import com.neatlogic.autoexecrunner.util.authtication.core.AuthenticateHandlerFactory;
@@ -392,18 +393,12 @@ public class HttpRequestUtil {
         return this;
     }
 
-    private JSONObject getAuthConfig() {
-        JSONObject authConfig = new JSONObject();
-        if (StringUtils.isNotBlank(this.username)) {
-            authConfig.put("username", this.username);
-        }
-        if (StringUtils.isNotBlank(this.password)) {
-            authConfig.put("password", this.password);
-        }
-        if (StringUtils.isNotBlank(this.token)) {
-            authConfig.put("token", this.token);
-        }
-        return authConfig;
+    private RestVo getAuthConfig() {
+        RestVo restVo = new RestVo();
+        restVo.setUsername(username);
+        restVo.setPassword(password);
+        restVo.setToken(token);
+        return restVo;
     }
 
     private HttpURLConnection getConnection() {
@@ -441,6 +436,7 @@ public class HttpRequestUtil {
             if (this.authType != null) {
                 IAuthenticateHandler handler = AuthenticateHandlerFactory.getHandler(this.authType.getValue());
                 if (handler != null) {
+                    RestVo restVo = new RestVo();
                     handler.authenticate(connection, this.getAuthConfig());
                 }
             }

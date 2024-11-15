@@ -55,7 +55,7 @@ public class NeatlogicMongoDbFactory extends SimpleMongoClientDatabaseFactory {
             String result = StringUtils.EMPTY;
             String CALLBACK_PROCESS_UPDATE_URL = "mongodb/datasource/get";
             String url = String.format("%s/api/rest/%s", Config.NEATLOGIC_ROOT(), CALLBACK_PROCESS_UPDATE_URL);
-            result = RestUtil.sendRequest(new RestVo(url, new JSONObject(), AuthenticateType.BEARER.getValue(), TenantContext.get().getTenantUuid()));
+            result = RestUtil.sendRequest(new RestVo(url, new JSONObject(), AuthenticateType.HMAC.getValue(), TenantContext.get().getTenantUuid()));
             try {
                 JSONObject resultJson = JSONObject.parseObject(result);
                 if (MapUtils.isNotEmpty(resultJson) && !Objects.equals(resultJson.getString("Status"), "OK")) {

@@ -1,8 +1,8 @@
 package com.neatlogic.autoexecrunner.util.authtication.handler;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.neatlogic.autoexecrunner.constvalue.AuthenticateType;
+import com.neatlogic.autoexecrunner.dto.RestVo;
 import com.neatlogic.autoexecrunner.util.authtication.core.IAuthenticateHandler;
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,9 +17,9 @@ public class BasicAuthenticateHandler implements IAuthenticateHandler {
 	}
 
 	@Override
-	public void authenticate(HttpURLConnection connection, JSONObject config) {
-		String username = config.getString("username");
-		String password = config.getString("password");
+	public void authenticate(HttpURLConnection connection, RestVo rest) {
+		String username = rest.getUsername();
+		String password = rest.getPassword();
 		if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)) {
 			Base64.Encoder encoder = Base64.getEncoder();
 			String key = username + ":" + password;

@@ -68,7 +68,7 @@ public class RestUtil {
             if (StringUtils.isNotBlank(restVo.getAuthType())) {
                 IAuthenticateHandler handler = AuthenticateHandlerFactory.getHandler(restVo.getAuthType());
                 if (handler != null) {
-                    handler.authenticate(connection, restVo.getAuthConfig());
+                    handler.authenticate(connection, restVo);
                 }
             }
 

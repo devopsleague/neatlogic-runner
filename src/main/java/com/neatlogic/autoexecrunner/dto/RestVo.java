@@ -2,10 +2,10 @@ package com.neatlogic.autoexecrunner.dto;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.neatlogic.autoexecrunner.constvalue.AuthenticateType;
 import com.neatlogic.autoexecrunner.asynchronization.threadlocal.UserContext;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class RestVo {
     private String id;
@@ -25,6 +25,9 @@ public class RestVo {
 
     private List<Object> paramList;
     private Map<String, Object> paramMap;
+    public RestVo(){
+
+    }
 
     public RestVo(String url, JSONObject payload, String authType, String username, String password, String tenant) {
         this.url = url;
@@ -153,18 +156,6 @@ public class RestVo {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public JSONObject getAuthConfig() {
-        JSONObject authObj = new JSONObject();
-        if (AuthenticateType.BASIC.getValue().equals(this.authType)) {
-            authObj.put("username", this.getUsername());
-            authObj.put("password", this.getPassword());
-        } else if (Objects.equals(AuthenticateType.BEARER.getValue(), this.authType)) {
-            authObj.put("token", this.token);
-            authObj.put("Authorization", this.token);
-        }
-        return authObj;
     }
 
     public int getTimeout() {

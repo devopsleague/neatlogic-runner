@@ -32,7 +32,7 @@ public class RunnerRegister implements IStartUp {
             String[] tenants = registerTenants.split(",");
             for (String tenant : tenants) {
                 String url = String.format("%s/any/api/t/%s/rest/runner/register", Config.NEATLOGIC_ROOT(), tenant);
-                RestUtil.sendRequest(new RestVo(url, params, AuthenticateType.BEARER.getValue(), TenantContext.get().getTenantUuid()));
+                RestUtil.sendRequest(new RestVo(url, params, AuthenticateType.HMAC.getValue(), TenantContext.get().getTenantUuid()));
             }
         }
     }

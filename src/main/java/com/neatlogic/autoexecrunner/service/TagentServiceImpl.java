@@ -27,7 +27,7 @@ public class TagentServiceImpl implements TagentService {
         } else {
             jsonObj.put("ip", IpUtil.getIpAddr(UserContext.get().getRequest()));
         }
-        RestVo restVo = new RestVo(url, jsonObj, AuthenticateType.BEARER.getValue(), jsonObj.getString("tenant"));
+        RestVo restVo = new RestVo(url, jsonObj, AuthenticateType.HMAC.getValue(), jsonObj.getString("tenant"));
         UserVo userVo = SystemUser.SYSTEM.getUserVo();
         LoginAuthHandlerBase.buildJwt(userVo);
         restVo.setToken(userVo.getAuthorization());

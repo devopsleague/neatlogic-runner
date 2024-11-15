@@ -7,7 +7,10 @@ package com.neatlogic.autoexecrunner.constvalue;
  * @date: 2021/2/101:29 下午
  **/
 public enum AuthenticateType {
-    NOAUTH("", "无需认证"), BASIC("basic", "Basic认证"), BEARER("bearertoken", "Bearer Token");
+    NOAUTH("", "无需认证"),
+    BASIC("basic", "Basic认证"),
+    BEARER("bearertoken", "Bearer Token"),
+    HMAC("hmac", "HMAC认证");
     private final String type;
     private final String text;
 

@@ -107,6 +107,8 @@ public class Config {
 
     public static Integer SERVER_ID;
 
+    private static String AUTOEXEC_TOKEN;// autoexec用户的token
+
 
     public static final List<String> RES_POSSIBLY_CHARSETS = new ArrayList<String>();
 
@@ -167,7 +169,9 @@ public class Config {
         return REGISTER_TENANTS;
     }
 
-
+    public static String AUTOEXEC_TOKEN() {
+        return AUTOEXEC_TOKEN;
+    }
     @PostConstruct
     public void init() {
         try {
@@ -232,7 +236,7 @@ public class Config {
 
             SERVER_ID = Integer.parseInt(prop.getProperty("server.id", "1"));
 
-
+            AUTOEXEC_TOKEN = prop.getProperty("autoexec.token", "499922b4317c251c2ce525f7b83e3d94");
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }

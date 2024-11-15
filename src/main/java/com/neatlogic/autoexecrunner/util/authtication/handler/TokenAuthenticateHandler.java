@@ -1,8 +1,8 @@
 package com.neatlogic.autoexecrunner.util.authtication.handler;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.neatlogic.autoexecrunner.constvalue.AuthenticateType;
+import com.neatlogic.autoexecrunner.dto.RestVo;
 import com.neatlogic.autoexecrunner.util.authtication.core.IAuthenticateHandler;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,8 +15,8 @@ public class TokenAuthenticateHandler implements IAuthenticateHandler {
 	}
 
 	@Override
-	public void authenticate(HttpURLConnection connection, JSONObject config) {
-		String token = config.getString("token");
+	public void authenticate(HttpURLConnection connection, RestVo rest) {
+		String token = rest.getToken();
 		if (StringUtils.isNotBlank(token)) {
 			connection.addRequestProperty("Authorization", token);
 		}

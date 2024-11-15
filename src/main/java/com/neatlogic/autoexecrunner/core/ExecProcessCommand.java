@@ -97,7 +97,7 @@ public class ExecProcessCommand implements Runnable {
                 String CALLBACK_PROCESS_UPDATE_URL = "autoexec/job/process/status/update";
                 String url = String.format("%s/api/rest/%s", Config.NEATLOGIC_ROOT(), CALLBACK_PROCESS_UPDATE_URL);
                 try {
-                    result = RestUtil.sendRequest(new RestVo(url, payload, AuthenticateType.BEARER.getValue(), commandVo.getTenant()));
+                    result = RestUtil.sendRequest(new RestVo(url, payload, AuthenticateType.HMAC.getValue(), commandVo.getTenant()));
                     JSONObject.parseObject(result);
                 } catch (JSONException e) {
                     logger.error("do RESTFul api failed,url: #{},result: #{}", url, result);
