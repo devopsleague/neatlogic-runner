@@ -14,6 +14,6 @@ import org.springframework.context.annotation.ImportResource;
  *     2.classpath引入：该路径就是src/java下面的配置文件：classpath:file
  *     3.引入本地文件：该路径是一种绝对路径：file:D://....
  */
-@ImportResource(locations = {"init.xml"})
+@ImportResource(locations = {"classpath:init.xml"})
 public class ConfigClass {
 }
