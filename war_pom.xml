@@ -50,10 +50,10 @@
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
-                <includes>
-                    <include>application.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
+                <excludes>
+                    <exclude>*.properties</exclude>
+                    <exclude>logback-spring.xml</exclude>
+                </excludes>
                 <filtering>true</filtering>
             </resource>
             <resource>
